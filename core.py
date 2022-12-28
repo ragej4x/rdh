@@ -23,26 +23,46 @@ def player_func():
         player.rdh.run_right_anim(pg, window)
 
 #IDLE
-    if player.rdh.left == True and player.rdh.move_right == False and player.rdh.move_left == False and player.rdh.jump == False:
+    if player.rdh.left == True and player.rdh.move_right == False and player.rdh.move_left == False and player.rdh.jump == False and player.rdh.cmb1 == False:
         player.rdh.idle_left_anim(pg, window)
 
-    if player.rdh.right == True and player.rdh.move_right == False and player.rdh.move_left == False and player.rdh.jump == False:
+    if player.rdh.right == True and player.rdh.move_right == False and player.rdh.move_left == False and player.rdh.jump == False and player.rdh.cmb1 == False:
         player.rdh.idle_right_anim(pg, window)
 #JUMP
-    if player.rdh.jump == True and player.rdh.left == True:
+    if player.rdh.jump == True and player.rdh.left == True :
         player.rdh.jump_left_anim(pg, window)
 
-    if player.rdh.jump == True and player.rdh.right == True:
+    if player.rdh.jump == True and player.rdh.right == True :
         player.rdh.jump_right_anim(pg, window)
 
+#COMBAT 1
+    if player.rdh.cmb1 == True and player.rdh.right == True and player.rdh.jump == False:
+        player.rdh.cmb1_right_anim(pg, window)
+
+    if player.rdh.cmb1 == True and player.rdh.left == True and player.rdh.jump == False:
+        player.rdh.cmb1_left_anim(pg, window)
+
 #fIX BUG IF "a" and "d" is helding
-    if keyinput[pg.K_a] == True and keyinput[pg.K_d] == True and player.rdh.jump == False:
+    if keyinput[pg.K_a] == True and keyinput[pg.K_d] == True and player.rdh.jump == False and player.rdh.cmb1 == False:
         player.rdh.idle_right_anim(pg, window)
         player.move_right = True
         player.rdh.right = True
         player.rdh.left = False
 
-    print(player.rdh.jump)
+#ENEMY PHYSICS
+    if player.rdh.rect.colliderect(enemy.slime.rect) and enemy.slime.jump == True:
+        if enemy.slime.left == True:
+            player.rdh.x -= 10
+            player.rdh.player_get_dmg = True
+            print("DMG")
+
+        if enemy.slime.right == True:
+            player.rdh.x += 10
+            player.rdh.player_get_dmg = True
+            print("DMG")
+        elif not enemy.slime.right == True:
+            player.rdh.player_get_dmg = False
+    print(player.rdh.player_get_dmg )
 
 
 #EVENT HANDLER
@@ -63,6 +83,6 @@ while loop == True:
     display.fill(0)
     window.blit(bg,(-250 - player.rdh.camera_x,-250))
 
-    #enemy.enem.update(pg, window)
+    enemy.slime.update(pg, window)
     player_func()
     event_handler()
