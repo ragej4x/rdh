@@ -53,16 +53,15 @@ def player_func():
     if player.rdh.rect.colliderect(enemy.slime.rect) and enemy.slime.jump == True:
         if enemy.slime.left == True:
             player.rdh.x -= 10
-            player.rdh.player_get_dmg = True
             print("DMG")
+            remove(player.rdh.player_health)
 
         if enemy.slime.right == True:
             player.rdh.x += 10
-            player.rdh.player_get_dmg = True
             print("DMG")
-        elif not enemy.slime.right == True:
-            player.rdh.player_get_dmg = False
-    print(player.rdh.player_get_dmg )
+
+
+    print(player.rdh.player_health)
 
 
 #EVENT HANDLER

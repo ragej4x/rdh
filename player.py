@@ -11,7 +11,9 @@ class rdh_class:
         self.left = False
         self.right = True
 
+
         #COMBAT
+        self.player_health = [1,2,3,4,5]
         self.player_get_dmg = False
         self.cmb1 = False
 
@@ -172,7 +174,7 @@ class rdh_class:
 
     #JUMP ANIMATION
     def jump_left_anim(self, pg,window):
-        for num in range(1,17 + 1):
+        for num in range(1,18 + 1):
             image = pg.image.load(f"data/rdh_anim/rdh_jump{num}.png")
             image = pg.transform.flip(image, True, False)
             image.set_colorkey((255,0,255))
@@ -182,7 +184,7 @@ class rdh_class:
 
 
     def jump_right_anim(self, pg,window):
-        for num in range(1,17 + 1):
+        for num in range(1,18 + 1):
             image = pg.image.load(f"data/rdh_anim/rdh_jump{num}.png")
             image.set_colorkey((255,0,255))
             self.jump_right_list.append(image)
