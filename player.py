@@ -50,23 +50,28 @@ class rdh_class:
         self.r,self.g,self.b = (255,0,0),(0,255,0),(0,0,255)
         self.rect = ((self.x - self.camera_x + 2, self.y + 16 , 16,20))
 
-        self.cmb_rect_left = ((self.x - self.camera_x - 15, self.y + 20 , 15,5))
-        self.cmb_rect_right = ((self.x - self.camera_x + 25, self.y + 20 , 15,5))
+        #self.cmb_rect_left = ((self.x - self.camera_x - 15, self.y + 20 , 15,5))
+        #self.cmb_rect_right = ((self.x - self.camera_x + 25, self.y + 20 , 15,5))
+
+        self.show_rect = False
     def update(self, pg, window):
         self.move_left = False
         self.move_right = False
 
+
         #RECTS
-        self.rect = ((self.x - self.camera_x + 2, self.y + 16 , 16,20))
-        self.rect = pg.draw.rect(window, (self.b),(self.rect),1)
+        self.rect = pg.Rect(self.x - self.camera_x + 2, self.y + 16 , 16,20)
+        self.cmb_rect_left = pg.Rect(self.x - self.camera_x - 15, self.y + 20 , 15,5)
+        self.cmb_rect_right = pg.Rect(self.x - self.camera_x + 20, self.y + 20 , 15,5)
 
-        if self.left == True:
-            self.cmb_rect_left = ((self.x - self.camera_x - 15, self.y + 20 , 15,5))
-            self.cmb_rect_left = pg.draw.rect(window, (self.r),(self.cmb_rect_left),1)
+        if self.show_rect == True:
+            self.rect = pg.draw.rect(window, (self.b),(self.rect),1)
 
-        if self.right == True:
-            self.cmb_rect_right = ((self.x - self.camera_x + 25, self.y + 20 , 15,5))
-            self.cmb_rect_right = pg.draw.rect(window, (self.r),(self.cmb_rect_right),1)
+            if self.left == True:
+                self.cmb_rect_left = pg.draw.rect(window, (self.r),(self.cmb_rect_left),1)
+
+            if self.right == True:
+                self.cmb_rect_right = pg.draw.rect(window, (self.r),(self.cmb_rect_right),1)
 
 
         self.keyinput = pg.key.get_pressed()
@@ -152,7 +157,7 @@ class rdh_class:
             self.x = self.x + 20
 
         #print(self.c1_frame_right)
-        print(self.x,self.speed)
+        #print(self.x,self.speed)
 
     #RUN ANIMATION
     def run_left_anim(self, pg, window):

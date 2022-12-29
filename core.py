@@ -14,7 +14,41 @@ bg = pg.image.load("data/bg.png")
 #PLAYER
 def player_func():
     keyinput = pg.key.get_pressed()
+    enemy.slime.update(pg, window)
     player.rdh.update(pg, window)
+
+#ENEMY PHYSICS AND DAMAGE LOGIC
+    if player.rdh.rect.colliderect(enemy.slime.rect) and enemy.slime.jump == True:
+        if enemy.slime.left == True:
+            player.rdh.x = player.rdh.x - 20
+            player.rdh.player_health -= 1
+            player.rdh.player_get_dmg = True
+            player.rdh.cmb1 = False
+            player.rdh.c1_frame_left = 0
+            print("DMG")
+
+
+        if enemy.slime.right == True:
+            player.rdh.x = player.rdh.x + 20
+            player.rdh.player_health -= 1
+            player.rdh.player_get_dmg = True
+            player.rdh.cmb1 = False
+            player.rdh.c1_frame_left = 0
+            print("DMG")
+
+#SLIMEJUMP ANIMATION:
+    if enemy.slime.j_count >= 0 and enemy.slime.left == True:
+        enemy.slime.jump_left_anim(window)
+
+    if enemy.slime.j_count >= 0 and enemy.slime.right == True:
+        enemy.slime.jump_right_anim(window)
+
+    if enemy.slime.left == False and enemy.slime.right == False:
+        window.blit(enemy.slime.slime_idle_image,(enemy.slime.x - player.rdh.camera_x, enemy.slime.y))
+
+    #EFFECTS GUSH
+    enemy.slime.fx(window)
+
 #RUN
 
     if player.rdh.move_left == True and player.rdh.move_right == False and player.rdh.jump == False:
@@ -50,36 +84,8 @@ def player_func():
         player.rdh.right = True
         player.rdh.left = False
 
-#ENEMY PHYSICS AND DAMAGE LOGIC
-    if player.rdh.rect.colliderect(enemy.slime.rect) and enemy.slime.jump == True:
-        if enemy.slime.left == True:
-            player.rdh.x = player.rdh.x - 20
-            player.rdh.player_health -= 1
-            player.rdh.player_get_dmg = True
-            player.rdh.cmb1 = False
-            player.rdh.c1_frame_left = 0
-            print("DMG")
 
-
-        if enemy.slime.right == True:
-            player.rdh.x = player.rdh.x + 20
-            player.rdh.player_health -= 1
-            player.rdh.player_get_dmg = True
-            player.rdh.cmb1 = False
-            player.rdh.c1_frame_left = 0
-            print("DMG")
-
-#SLIMEJUMP ANIMATION:
-    if enemy.slime.j_count >= 0 and enemy.slime.left == True:
-        enemy.slime.jump_left_anim(window)
-
-    if enemy.slime.j_count >= 0 and enemy.slime.right == True:
-        enemy.slime.jump_right_anim(window)
-
-    if enemy.slime.left == False and enemy.slime.right == False:
-        window.blit(enemy.slime.slime_idle_image,(enemy.slime.x - player.rdh.camera_x, enemy.slime.y))
-
-    print(enemy.slime.left,enemy.slime.right)
+    #print(enemy.slime.left,enemy.slime.right)
 
 #DAMAGE ANIMATION
     if player.rdh.player_get_dmg == True and player.rdh.left == True:
@@ -96,6 +102,8 @@ def player_func():
 
 
     #print(player.rdh.player_get_dmg)
+    #UPDATE
+
 
 #SHOW FPS
 def show_fps():
@@ -126,9 +134,10 @@ while loop == True:
     window.blit(bg,(-250 - player.rdh.camera_x,-250))
 
 
-    enemy.slime.update(pg, window)
+
     #enemy.slime2.update(pg, window)
     #window.blit(hb,(0,0))
 
     player_func()
+
     event_handler()
